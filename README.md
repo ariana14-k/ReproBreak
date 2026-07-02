@@ -12,7 +12,7 @@ ReproBreak is a dataset of reproducible web locator breaks collected from real-w
 
 | Tool | Version |
 |:---|:---|
-| Python | 3.10+ |
+| Python | 3.11+ |
 | Git CLI | any |
 | Docker | with Compose |
 | uv *(recommended)* | latest |
@@ -140,10 +140,6 @@ Then run:
 python create_reproducible_dataset.py <repo>
 ```
 
-<style>
-ol { list-style-type: decimal !important; }
-</style>
-
 This will clone the repository and iterate through all commits containing a locator change. For each commit, it will:
 1. Try to build an image for the commit.
 2. If the build succeeds, it will iterate through all test_files. For each test file, it will:
@@ -154,7 +150,7 @@ This will clone the repository and iterate through all commits containing a loca
         3. If the test fails, it will mark the locator change as a reproducible break in the database. If it passes, the locator change is not break.
 
 The results will be stored in a numbered folder under `data/reproduction_files/repos/<repo-name>/<run_number>/`. This folder will contain the following files:
-- `results.json`: A JSON file containing information about the state of all inspected lcoator changes during this run.
+- `results.json`: A JSON file containing information about the state of all inspected locator changes during this run.
 - `Dockerfile`: The Dockerfile used to build the image for this run.
 - `run_tests.sh`: The test runner script used to run tests for this run.
 

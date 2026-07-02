@@ -1832,8 +1832,6 @@ id,repository,old_locator,new_locator,category
 1831,microsoftgraph/microsoft-graph-explorer-v4,"page.getByRole('link', { name: 'GET applications More actions' })","page.getByRole('link', { name: 'Get applications' })",structural_break
 1832,microsoftgraph/microsoft-graph-explorer-v4,"page.getByRole('tab', { name: 'CSharp CSharp' })","page.getByRole('tab', { name: 'C# C#' })",structural_break
 1833,microsoftgraph/microsoft-graph-explorer-v4,"page.getByRole('tab', { name: 'CSharp CSharp' })","page.getByRole('tab', { name: 'C# C#' })",structural_break
-1834,handsontable/handsontable,page.$('.handsontable tbody tr td:nth-child(9),page.$('.handsontable tbody tr td:nth-child(7),structural_break
-1835,handsontable/handsontable,page.$('.handsontable tbody tr td:nth-child(10)'),page.$('.handsontable tbody tr td:nth-child(8)'),structural_break
 1836,aurelia/aurelia,"page.locator('ul#sub-links >> a:has-text(""Sub/2"")'))","page.locator('ul#sub-links >> a:has-text(""Foo Bar"")'))",structural_break
 1837,aurelia/aurelia,"page.locator('ul#sub-links >> a:has-text(""Sub/2"")'))","page.locator('ul#sub-links >> a:has-text(""Foo Bar"")'))",structural_break
 1838,athou/commafeed,"page.locator(""div[role='alert']"")",page.getByRole(AriaRole.ALERT),structural_break
@@ -2765,23 +2763,6 @@ id,repository,old_locator,new_locator,category
 2764,elementor/elementor,page.locator( EditorSelectors.onboarding.progressBar.completedItem ),page.locator( EditorSelectors.onboarding.screenTitle ),structural_break
 2765,elementor/elementor,page.locator( EditorSelectors.onboarding.progressBar.skippedItem ),page.locator( EditorSelectors.onboarding.screenTitle ),structural_break
 2766,elementor/elementor,page.waitForSelector( 'text=Skip' ),page.locator( EditorSelectors.onboarding.skipButton ),structural_break
-2767,alphagov/govuk-frontend,"page.$eval(enhancedInputSelector, (el)","page.$eval(inputSelector, (el)",structural_break
-2768,alphagov/govuk-frontend,"page.$eval(enhancedInputSelector, (el)","page.$eval(inputSelector, (el)",structural_break
-2769,alphagov/govuk-frontend,page.$('.govuk-file-upload__button'),page.$('.govuk-file-upload-button'),structural_break
-2770,alphagov/govuk-frontend,page.$('.govuk-file-upload__button'),page.$('.govuk-file-upload-button'),structural_break
-2771,alphagov/govuk-frontend,page.$('.govuk-file-upload__button'),page.$('.govuk-file-upload-button'),structural_break
-2772,alphagov/govuk-frontend,"page.$eval(inputSelector, (el)","page.$eval(enhancedInputSelector, (el)",structural_break
-2773,alphagov/govuk-frontend,"page.$eval(inputSelector, (el)","page.$eval(enhancedInputSelector, (el)",structural_break
-2774,alphagov/govuk-frontend,page.$('.govuk-file-upload-wrapper'),page.$('.govuk-drop-zone'),structural_break
-2775,alphagov/govuk-frontend,"page.$eval('.govuk-file-upload-wrapper', ($el)","page.$eval('.govuk-drop-zone', ($el)",structural_break
-2776,alphagov/govuk-frontend,"page.$eval('#content', (el)","page.$eval('#test-target-element', (el)",structural_break
-2777,alphagov/govuk-frontend,"page.$eval('#content', (el)","page.$eval('#test-target-element', (el)",structural_break
-2778,alphagov/govuk-frontend,"page.$eval('#content', (el)","page.$eval('#test-target-element', (el)",structural_break
-2779,alphagov/govuk-frontend,"page.$eval('#content', (el)","page.$eval('#test-target-element', (el)",structural_break
-2780,alphagov/govuk-frontend,"page.$eval('.govuk-main-wrapper', (el)","page.$eval('#content', (el)",structural_break
-2781,alphagov/govuk-frontend,"page.$eval('.govuk-main-wrapper', (el)","page.$eval('#content', (el)",structural_break
-2782,alphagov/govuk-frontend,"page.$eval('.govuk-main-wrapper', (el)","page.$eval('#content', (el)",structural_break
-2783,alphagov/govuk-frontend,"page.$eval('.govuk-main-wrapper', (el)","page.$eval('#content', (el)",structural_break
 2784,mui/material-ui,page.locator('#language-menu')),page.locator('#mui-version-menu')),structural_break
 2785,mui/material-ui,page.locator('div > h2#heading-api ~ ul a'),page.locator('div > h2#api ~ ul a'),structural_break
 2786,mui/material-ui,"page.locator('h2:has-text(""AcUnit"")'))","page.locator('.MuiDialog-container h2:has-text(""AcUnit"")'))",structural_break
@@ -4308,7 +4289,6 @@ id,repository,old_locator,new_locator,category
 4307,wordpress/gutenberg,"page.locator( 'role=button[name=""View""i]' )","page.locator( 'role=button[name=""Preview""i]' )",structural_break
 4308,wordpress/gutenberg,"page.locator( 'role=button[name=""Preview""i]' )","page.locator( 'role=button[name=""View""i]' )",structural_break
 4309,wordpress/gutenberg,"page.click( 'role=button[name=""Publish""i]' )",page.locator( '.editor-post-status-trigger' ),structural_break
-4310,wordpress/gutenberg,"page.locator( 'button[aria-label=""Heading 3""]' )","page.locator( 'role=menuitemradio[name=""Heading 3""]' )",structural_break
 4311,wordpress/gutenberg,"page.getByRole( 'button', { name: 'Change URL' } )","page.getByRole( 'button', { name: 'Change link' } )",structural_break
 4312,wordpress/gutenberg,"page.getByRole( 'button', { name: 'Change URL' } )","page.getByRole( 'button', { name: 'Change link' } )",structural_break
 4313,wordpress/gutenberg,"page.getByRole( 'button', { name: 'Change URL' } )","page.getByRole( 'button', { name: 'Change link' } )",structural_break
@@ -8613,8 +8593,6 @@ id,repository,old_locator,new_locator,category
 8612,strapi/strapi,"page.getByRole('heading', { name: 'Secret Document' }))","page.getByRole('heading', { name: ctName }))",structural_break
 8613,strapi/strapi,"page.getByRole('button', { name: 'Edit' })","page.getByRole('button', { name: 'Edit', exact: true })",structural_break
 8614,strapi/strapi,"page.getByRole('button', { name: 'Edit' })","page.getByRole('button', { name: 'Edit', exact: true })",structural_break
-8615,frontarm/create-universal-react-app,"page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 })","page.waitForSelector('.mjs-gql-result', { timeout: 0 })",structural_break
-8616,frontarm/create-universal-react-app,"page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 })","page.waitForSelector('.mjs-gql-result', { timeout: 0 })",structural_break
 8617,clerk/javascript,page.getByText(/Add an email address/i),page.getByText(/Add email address/i),structural_break
 8618,clerk/javascript,page.getByText(/Add an email address/i),page.getByText(/Add email address/i),structural_break
 8619,clerk/javascript,page.getByText(/Add an email address/i),page.getByText(/Add email address/i),structural_break
@@ -9526,14 +9504,6 @@ id,repository,old_locator,new_locator,category
 9525,guardicore/monkey,"cy.get('button[text=""Sign In""]')",cy.get('button'),structural_break
 9526,guardicore/monkey,"cy.get('input[placeholder=""username""]')","cy.get('input[name=""password""]')",structural_break
 9527,guardicore/monkey,"cy.get('button[text=""Sign In""]')",cy.get('button'),structural_break
-9528,web-infra-dev/modern.js,"page.$eval('#item', el => el?.textContent)",page.waitForSelector('#data'),structural_break
-9529,web-infra-dev/modern.js,"page.$eval('#item', el => el?.textContent)",page.waitForSelector('#data'),structural_break
-9530,web-infra-dev/modern.js,page.click('.user-btn'),page.waitForSelector('.user-btn'),structural_break
-9531,web-infra-dev/modern.js,page.$('.error-case'),page.$('.error-loader-page'),structural_break
-9532,web-infra-dev/modern.js,page.waitForSelector('#root'),page.waitForSelector('#root_layout'),structural_break
-9533,web-infra-dev/modern.js,page.waitForSelector('#root'),page.waitForSelector('#root_layout'),structural_break
-9534,web-infra-dev/modern.js,page.waitForSelector('#root'),page.waitForSelector('#root_layout'),structural_break
-9535,web-infra-dev/modern.js,page.waitForSelector('#root'),page.waitForSelector('#root_layout'),structural_break
 9536,trezor/trezor-suite,page.getByTestId('@onboarding/exit-app-button')),page.getByTestId('@onboarding/complete-onboarding')),structural_break
 9537,immich-app/immich,page.locator('#immich-asset-viewer #broken-asset [data-broken-asset]'),page.locator('[data-viewer-content] [data-broken-asset]'),structural_break
 9538,audiusproject/audius-client,"cy.get(""[aria-busy]"")",cy.get('[aria-busy]'),structural_break
@@ -9601,5 +9571,3 @@ id,repository,old_locator,new_locator,category
 9600,posthog/posthog-foss,page.locator('h1')),"page.locator('[role=""heading""][aria-level=""1""]'))",structural_break
 9601,posthog/posthog-foss,page.locator('h1')),"page.locator('[role=""heading""][aria-level=""1""]'))",structural_break
 9602,posthog/posthog-foss,page.getByText('Surveys opt in updated')),page.getByTestId('toast-close-button'),structural_break
-9603,facebook/create-react-app,"page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 })","page.waitForSelector('.mjs-gql-result', { timeout: 0 })",structural_break
-9604,facebook/create-react-app,"page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 })","page.waitForSelector('.mjs-gql-result', { timeout: 0 })",structural_break
