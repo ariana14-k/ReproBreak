@@ -1,6 +1,7 @@
 __pycache__
 repos
 output
+dist
 data
 venv
 data/locator_break.db

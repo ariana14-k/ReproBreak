@@ -20,34 +20,59 @@ class Reproduction_Mode(Enum):
 
 def main():
     parser = argparse.ArgumentParser(description='Reproduce environment from locator break')
-    parser.add_argument('--locator_id', type=int, required=True,
+    parser.add_argument('--locator_id', type=int,
                         help='Locator_change_id of the locator break to reproduce')
     parser.add_argument('--db', default=LB_PATH,
                         help='Path to SQLite database')
     parser.add_argument('--work_dir', default=REPRODUCTION_PATH,
                         help='Working directory for reproduction (default: ./reproduction)')
-    parser.add_argument('--mode', type=str, required=True,
+    parser.add_argument('--mode', type=str,
                         choices=[m.value for m in Reproduction_Mode],
                         help='Reproduction mode: REPRODUCE_BREAK, FIXED, or OVERWRITE')
+    parser.add_argument('--list', action='store_true',
+                        help='List all reproducible locator break IDs and exit')
 
     args = parser.parse_args()
+
+    if args.list:
+        list_locator_breaks(args.db)
+        return
+
+    if args.locator_id is None or args.mode is None:
+        parser.error('--locator_id and --mode are required (use --list to see the reproducible IDs)')
 
     print("=" * 50)
     print("  Locator Break Reproduction")
     print("=" * 50)
     print()
 
-    repos_path = f'{args.work_dir}/repos'
+    result = reproduce_locator_break(args.locator_id, args.mode, args.db, args.work_dir)
+    if result is None:
+        sys.exit(1)
+
+
+def reproduce_locator_break(locator_id, mode, db_path=LB_PATH, work_dir=REPRODUCTION_PATH):
+    """Reproduce a locator break end-to-end and return the resulting TestStatus.
+
+    Returns None when the reproduction cannot be set up, i.e., the ID is
+    not a reproducible locator break or the Docker image build fails.
+    """
+    repos_path = f'{work_dir}/repos'
     os.makedirs(repos_path, exist_ok=True)
 
     # Step 1: Get info from database
 
-    print(f"🔍 Getting info for locator break ID: {args.locator_id}")
-    info = get_locator_break_reproduction_info(args.db, args.locator_id)
+    print(f"🔍 Getting info for locator break ID: {locator_id}")
+    info = get_locator_break_reproduction_info(db_path, locator_id)
 
     if not info:
-        print(f"❌ No locator break found with ID: {args.locator_id}")
-        sys.exit(1)
+        print(f"❌ No locator break found with ID: {locator_id}")
+        if is_locator_change(db_path, locator_id):
+            print(f"   ID {locator_id} is a locator change, but not one of the reproducible")
+            print(f"   locator breaks. Run with --list to see the reproducible IDs.")
+        else:
+            print(f"   Run with --list to see the reproducible IDs.")
+        return None
 
     print(f"  Repository: {info['repository_name']}")
     print(f"  Commit: {info['commit_sha']}")
@@ -59,7 +84,7 @@ def main():
     os.makedirs(reproduce_path, exist_ok=True)
     repo_path = f'{reproduce_path}/{repo_name}'
     clone_repo(info['repository_name'], repo_path)
-    if args.mode in [Reproduction_Mode.REPRODUCE_BREAK.value, Reproduction_Mode.FIXED.value]:
+    if mode in [Reproduction_Mode.REPRODUCE_BREAK.value, Reproduction_Mode.FIXED.value]:
         reset_repository(repo_path)
     subprocess.call(["git", "-C", repo_path, "checkout", info['commit_sha']])
 
@@ -77,14 +102,14 @@ def main():
         image = setup_base_image(client, reproduce_path, info['commit_sha'])
         if image is None:
             print(f"❌ Failed to build Docker image.")
-            sys.exit(1)
+            return None
     else:
         print(f"Docker image already exists. Skipping build.")
 
     # Step 5: Replace locator
     test_file_path = info['test_file_path']
     absolute_repo_path = os.path.abspath(repo_path)
-    if args.mode == Reproduction_Mode.REPRODUCE_BREAK.value:
+    if mode == Reproduction_Mode.REPRODUCE_BREAK.value:
         print(f"Replacing locator to reproduce break...")
         replace_locator(info["new_locator"], info["old_locator"], info["line_no"], info["test_file_path"], repo_path)
 
@@ -104,7 +129,7 @@ def main():
     print(f"Locator information")
     print(f"File path: {os.path.abspath(absolute_test_file_path)}")
     print(f"Line number: {info['line_no']}")
-    if args.mode == Reproduction_Mode.REPRODUCE_BREAK.value:
+    if mode == Reproduction_Mode.REPRODUCE_BREAK.value:
         print(f"Locator change: {info['old_locator']} -> {info['new_locator']}")
 
     if test_result == TestStatus.PASSED:
@@ -113,6 +138,9 @@ def main():
         print(f"❌ Test failed!")
     else:
         print(f"⚠️ Test execution resulted in failure: {test_result}")
+
+    return test_result
+
 
 def get_locator_break_reproduction_info(db_path, locator_id):
     con = sqlite3.connect(db_path)
@@ -143,6 +171,39 @@ def get_locator_break_reproduction_info(db_path, locator_id):
         'files_json': result[6],
         'instructions': result[7],
     }
+
+
+def is_locator_change(db_path, locator_id):
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    cur.execute("SELECT COUNT(*) FROM locator_change WHERE id = ?", (locator_id,))
+    exists = cur.fetchone()[0] > 0
+    con.close()
+    return exists
+
+
+def list_locator_breaks(db_path):
+    """Print all reproducible locator break IDs, grouped by repository."""
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    cur.execute("""SELECT lc.repository_name, lc.id, lc.old_locator, lc.new_locator
+                   FROM locator_break lb
+                   INNER JOIN locator_change lc ON lb.locator_change_id = lc.id
+                   ORDER BY lc.repository_name, lc.id""")
+    rows = cur.fetchall()
+    con.close()
+
+    def truncate(s, n=45):
+        return s if len(s) <= n else s[:n - 3] + "..."
+
+    current_repo = None
+    for repo, lc_id, old_locator, new_locator in rows:
+        if repo != current_repo:
+            print(f"\n{repo}")
+            current_repo = repo
+        print(f"  {lc_id:>6}  {truncate(old_locator)} -> {truncate(new_locator)}")
+
+    print(f"\n{len(rows)} reproducible locator breaks")
 
 
 def extract_reproduction_files(files_json, output_path, repo_name):

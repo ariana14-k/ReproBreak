@@ -1,7 +1,7 @@
 [project]
 name = "ase2026-reproducible-locator-break-dataset"
 version = "0.1.0"
-description = "Add your description here"
+description = "ReproBreak: a dataset of reproducible web locator breaks in Cypress and Playwright GUI tests, with tooling to reproduce and extend it"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

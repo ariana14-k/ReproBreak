@@ -1,0 +1,32 @@
+# Container image for the ReproBreak orchestrator (reproduce.py and the
+# analysis scripts). The reproduction environments themselves are separate
+# Docker images that the orchestrator builds per commit; this image talks
+# to the host Docker daemon through the mounted socket.
+#
+#   docker build -f Dockerfile.artifact -t reprobreak .
+#   docker run --rm \
+#     -v /var/run/docker.sock:/var/run/docker.sock \
+#     -v "$PWD:$PWD" -w "$PWD" \
+#     reprobreak reproduce.py --locator_id 1224 --mode fixed
+#
+# The artifact directory must be bind-mounted at the SAME absolute path
+# inside the container ("$PWD:$PWD"): the orchestrator bind-mounts test
+# files into the reproduction containers using absolute paths, which the
+# host daemon resolves on the host filesystem.
+FROM python:3.12-slim
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+
+# Install the pinned dependencies system-wide so that no network access or
+# virtual environment is needed at run time.
+COPY pyproject.toml uv.lock /tmp/reprobreak/
+RUN uv export --directory /tmp/reprobreak --frozen --no-emit-project --no-dev -o /tmp/reprobreak/requirements.txt && \
+    uv pip install --system -r /tmp/reprobreak/requirements.txt && \
+    rm -rf /tmp/reprobreak
+
+ENTRYPOINT ["python3"]
+CMD ["smoke_test.py"]

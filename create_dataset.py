@@ -1,3 +1,4 @@
+import sys
 from os.path import exists
 
 from config import REPOS_PATH, DELETE_REPO_AFTER_ANALYZE, CREATE_OVERVIEW, \
@@ -8,6 +9,10 @@ from database.database import *
 import os
 from tqdm import tqdm
 from datetime import datetime
+
+# Repositories can be passed as arguments (e.g. `python create_dataset.py owner/repo`)
+# to mine specific projects without editing REPO_LIST in config.py.
+repo_list = sys.argv[1:] if len(sys.argv) > 1 else REPO_LIST
 print("Initializing output csv's")
 if not exists(OUTPUT_PATH):
     os.makedirs(OUTPUT_PATH)
@@ -28,7 +33,7 @@ if START_WITH_CLEAN_DB:
 db_path = f'{db_path}/ReproBreak.db'
 setup_reprobreak_db(db_path)
 
-if not REPO_LIST:
+if not repo_list:
     print("Repo list is empty")
     exit()
 
@@ -45,7 +50,7 @@ if not os.path.exists(REPOS_PATH):
 # 4. Get Locator breaks
 # 5. Add to overview and store in db
 # 6. Delete Repo
-for repo_name in tqdm(REPO_LIST, desc="Processing repos"):
+for repo_name in tqdm(repo_list, desc="Processing repos"):
     repo = None
     try:
         clone_repo(repo_name)
