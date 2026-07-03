@@ -4,7 +4,7 @@ We apply for the **Artifacts Available** and **Artifacts Reusable** badges.
 
 ## Artifacts Available
 
-The complete artifact is archived on Zenodo under DOI [10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX) and released under the [MIT license](LICENSE). A development mirror is maintained at <https://github.com/rub-sq/ReproBreak>.
+The complete artifact is archived on Zenodo and released under the [MIT license](LICENSE). The Zenodo record is referenced in the artifact submission. A development mirror is maintained at <https://github.com/rub-sq/ReproBreak>.
 
 ## Artifacts Reusable
 

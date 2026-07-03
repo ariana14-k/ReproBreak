@@ -6,7 +6,7 @@
 
 ReproBreak is a dataset of reproducible web locator breaks, mined from real-world open-source projects that use Cypress or Playwright for GUI testing. It contains 9,572 locator changes from 359 analyzed repositories and 449 locator breaks that can be re-executed and confirmed in Docker environments. The dataset supports research on test fragility, locator robustness, and automated test repair.
 
-This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is at DOI [10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX). A video demonstration is available at <https://youtu.be/mZByS_TnCvE>.
+This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is available on Zenodo. A video demonstration is available at <https://youtu.be/mZByS_TnCvE>.
 
 Artifact documentation: [REQUIREMENTS.md](REQUIREMENTS.md) · [STATUS.md](STATUS.md) · [EXTENDING.md](EXTENDING.md) · [LICENSE](LICENSE)
 
@@ -139,7 +139,7 @@ The third mode, `overwrite`, runs the tests without touching the locator or the 
 ### 2.2 Claims not directly supported by the artifact
 
 - **Table 1, columns #Lc_valid (580) and #Lnb (131).** These columns count all inspected locator changes and the non-breaking ones. They were computed from the Phase 2 run outputs, which are not part of the shipped dataset. The database stores the 449 confirmed breaks only. Recomputing the two columns means re-running Phase 2 for the four projects, which takes several days. See Section 5.
-- **Re-mining all 374 repositories.** A full Phase 1 run takes weeks, and the source repositories keep evolving past the cut-off date of the dataset. The mining pipeline itself can be tried on a single repository in a few minutes. See Section 5.
+- **Re-mining all 359 repositories.** A full Phase 1 run takes weeks, and the source repositories keep evolving past the cut-off date of the dataset. The mining pipeline itself can be tried on a single repository in a few minutes. See Section 5.
 - **Table 2 denominators (189 Playwright, 154 Cypress, 16 both).** The framework classification of all analyzed repositories was computed during test-file detection in Phase 1 and is not persisted in the database. The database contains the classification only for repositories with locator changes.
 
 ### 2.3 Reduced and full scope
@@ -213,7 +213,7 @@ The dataset is a relational SQLite database. The schema is in [database/schema.s
 
 ### 3.2 Provenance
 
-The dataset is derived from the [E2EGit dataset](https://doi.org/10.1109/MSR66628.2025.00121) of open-source web applications with end-to-end GUI test suites. From it, we selected the 374 repositories that use Cypress or Playwright and mined their full git histories for locator changes. The mining pipeline is described in Section 2.2 of the paper. The cut-off date is April 21, 2026. The four projects with reproduction environments are ghiscoding/angular-slickgrid, nasa/openmct, tryghost/koenig, and microsoft/playwright.
+The dataset is derived from the [E2EGit dataset](https://doi.org/10.1109/MSR66628.2025.00121) of open-source web applications with end-to-end GUI test suites. From it, we selected the 374 repositories that use Cypress or Playwright: 191 with Playwright and 183 with Cypress. 15 of them were no longer available on GitHub, so 359 repositories were analyzed, and 211 of those contain locator changes. We mined the full git history of every analyzed repository. The mining pipeline is described in Section 2.2 of the paper. The cut-off date is April 21, 2026. The four projects with reproduction environments are ghiscoding/angular-slickgrid, nasa/openmct, tryghost/koenig, and microsoft/playwright.
 
 ### 3.3 Ethical and legal statements
 

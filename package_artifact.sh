@@ -48,13 +48,11 @@ ls -lh "$DIST"
 cat <<'EOF'
 
 Next steps (Zenodo):
- 1. Create a new upload at https://zenodo.org/uploads/new and use
-    "Get a DOI now" to RESERVE the DOI before publishing.
- 2. Replace the placeholder 10.5281/zenodo.XXXXXXX in README.md,
-    STATUS.md, and ARTIFACT_ABSTRACT.md with the reserved DOI, then
-    re-run this script and upload the regenerated files.
- 3. Upload all files from dist/, fill in the metadata (title, authors,
-    MIT license, related identifier: the paper DOI), and publish.
- 4. Add a Data Availability statement with the DOI to the camera-ready
+ 1. Create a new upload at https://zenodo.org/uploads/new, upload all
+    files from dist/, fill in the metadata (title, authors, MIT
+    license), and publish. Publishing assigns the DOI.
+ 2. Insert the published record link into ARTIFACT_ABSTRACT.md
+    (Badge and Provenance sections) before submitting it.
+ 3. Add a Data Availability statement with the DOI to the camera-ready
     version of the paper.
 EOF
