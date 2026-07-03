@@ -6,7 +6,7 @@
 
 ReproBreak is a dataset of reproducible web locator breaks, mined from real-world open-source projects that use Cypress or Playwright for GUI testing. It contains 9,572 locator changes from 359 analyzed repositories and 449 locator breaks that can be re-executed and confirmed in Docker environments. The dataset supports research on test fragility, locator robustness, and automated test repair.
 
-This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is available on Zenodo. A video demonstration is available at <https://youtu.be/mZByS_TnCvE>.
+This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is available on Zenodo.
 
 Artifact documentation: [REQUIREMENTS.md](REQUIREMENTS.md) · [STATUS.md](STATUS.md) · [EXTENDING.md](EXTENDING.md) · [LICENSE](LICENSE)
 
