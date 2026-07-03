@@ -1,8 +1,6 @@
 # Artifact Submission Abstract — ASE 2026 Artifact Evaluation
 
-## Paper title
-
-ReproBreak: A Dataset of Reproducible Web Locator Breaks
+## ReproBreak: A Dataset of Reproducible Web Locator Breaks
 
 ## Link to the accepted paper
 
