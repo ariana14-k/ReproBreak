@@ -6,9 +6,7 @@
 
 ReproBreak is a dataset of reproducible web locator breaks, mined from real-world open-source projects that use Cypress or Playwright for GUI testing. It contains 9,572 locator changes from 359 analyzed repositories and 449 locator breaks that can be re-executed and confirmed in Docker environments. The dataset supports research on test fragility, locator robustness, and automated test repair.
 
-This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is available on Zenodo.
-
-Artifact documentation: [REQUIREMENTS.md](REQUIREMENTS.md) · [STATUS.md](STATUS.md) · [EXTENDING.md](EXTENDING.md) · [LICENSE](LICENSE)
+This is the artifact of the paper "ReproBreak: A Dataset of Reproducible Web Locator Breaks" (ASE 2026). The archival version is available on Zenodo: <https://doi.org/10.5281/zenodo.21171968>.
 
 ---
 
@@ -25,7 +23,7 @@ Setup takes less than 30 minutes. Most of that is the database download.
 
 ### 1.2 Requirements
 
-Python 3.11 or newer, git, and a running Docker daemon. Reproductions need about 30 GB of free disk space and internet access, because they clone GitHub repositories and pull Docker base images. Details are in [REQUIREMENTS.md](REQUIREMENTS.md).
+Python 3.11 or newer, git, and a running Docker daemon. Reproductions need about 30 GB of free disk space and internet access, because they clone GitHub repositories and pull Docker base images.
 
 ### 1.3 Install
 
@@ -239,8 +237,6 @@ Beyond reproducing the paper, ReproBreak supports the research directions from S
 3. **Locator repair approaches.** For each of the 449 breaks, reinsert the old locator with `--mode reproduce_break`, let your tool propose a repair, apply it to the printed test file path, and validate with `--mode overwrite`. The ground-truth repair is `locator_change.new_locator`.
 4. **NL-based testing robustness.** Convert the broken tests into natural-language representations and check whether the abstraction avoids the break, using the same reproduction environments.
 
-[EXTENDING.md](EXTENDING.md) explains how to extend the dataset itself with new repositories, frameworks, and reproduction environments.
-
 ---
 
 ## 5. Building the Dataset from Scratch (optional)
@@ -262,7 +258,7 @@ Key settings in `config.py`: `REPO_LIST`, `START_WITH_CLEAN_DB`, `STOP_ON_ERROR`
 
 ### Phase 2 — Verify reproducibility
 
-Place a `Dockerfile` and a test runner script `run_tests.sh` at `data/reproduction_files/repos/<repo-name>/`. The contract these two files must follow is described in [EXTENDING.md](EXTENDING.md). Then run:
+Place a `Dockerfile` and a test runner script `run_tests.sh` at `data/reproduction_files/repos/<repo-name>/`. Then run:
 
 ```bash
 uv run create_reproducible_dataset.py <owner/repo>
@@ -296,9 +292,6 @@ Reads the results of each run in order and inserts the reproduction files and th
 ```text
 ReproBreak/
 ├── README.md                        # This file
-├── REQUIREMENTS.md                  # Hardware and software requirements
-├── STATUS.md                        # Badges applied for
-├── EXTENDING.md                     # Reuse and extension guide
 ├── LICENSE                          # MIT
 ├── reproduce.py                     # Reproduce a locator break (--list, 3 modes)
 ├── smoke_test.py                    # Environment and dataset smoke test

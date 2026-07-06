@@ -2,8 +2,12 @@
 # Package the ReproBreak artifact for archival upload (e.g., Zenodo).
 #
 # Produces in dist/:
-#   reprobreak-code.zip   code + documentation
+#   reprobreak-code.zip   code + README (the only markdown inside the zip)
 #   ReproBreak-db.zip     the SQLite dataset (from data/ReproBreak.db)
+#   README.md, REQUIREMENTS.md, STATUS.md, EXTENDING.md, ARTIFACT_ABSTRACT.md
+#                         artifact documentation, as standalone files (the
+#                         README copy has no logo and its repo-relative
+#                         references rewritten to ReproBreak/)
 #   <paper>.pdf           author version of the paper (if present in the root)
 #   SHA256SUMS.txt        checksums of the files above
 set -euo pipefail
@@ -14,13 +18,26 @@ rm -rf "$DIST"
 mkdir -p "$DIST"
 
 echo "Packaging code..."
-# ARTIFACT_ABSTRACT.md is the submission-form content (CfA step 3), not part
-# of the reviewed package.
 zip -q -r "$DIST/reprobreak-code.zip" . \
   -x ".git/*" -x ".venv/*" -x "repos/*" -x "output/*" -x "data/*" \
   -x "dist/*" -x "__pycache__/*" -x "*/__pycache__/*" -x "*.pyc" \
   -x ".DS_Store" -x "*/.DS_Store" -x ".idea/*" -x "*.pdf" -x "workspace/*" \
-  -x "ARTIFACT_ABSTRACT.md"
+  -x "REQUIREMENTS.md" -x "STATUS.md" -x "EXTENDING.md" -x "ARTIFACT_ABSTRACT.md"
+
+echo "Copying artifact documentation..."
+cp REQUIREMENTS.md STATUS.md EXTENDING.md ARTIFACT_ABSTRACT.md "$DIST/"
+
+# Standalone README copy: the logo block is dropped (it cannot render on the
+# Zenodo record page) and repo-relative references are rewritten to the
+# ReproBreak/ folder that unzipping reprobreak-code.zip creates. The README
+# inside the zip keeps the original content.
+sed '1,/^---$/d' README.md | sed '/./,$!d' | sed \
+  -e 's|](Dockerfile.artifact)|](ReproBreak/Dockerfile.artifact)|g' \
+  -e 's|](database/schema.sql)|](ReproBreak/database/schema.sql)|g' \
+  -e 's|](LICENSE)|](ReproBreak/LICENSE)|g' \
+  -e 's|`data/ReproBreak.db`, downloaded separately|`ReproBreak/data/ReproBreak.db`, downloaded separately|' \
+  -e 's|`data/ReproBreak.db` unpacked|`ReproBreak/data/ReproBreak.db` unpacked|' \
+  > "$DIST/README.md"
 
 echo "Packaging database (this can take a few minutes)..."
 if [ -f data/ReproBreak.db ]; then
@@ -47,12 +64,7 @@ echo "Artifact files ready in $DIST/:"
 ls -lh "$DIST"
 cat <<'EOF'
 
-Next steps (Zenodo):
- 1. Create a new upload at https://zenodo.org/uploads/new, upload all
-    files from dist/, fill in the metadata (title, authors, MIT
-    license), and publish. Publishing assigns the DOI.
- 2. Insert the published record link into ARTIFACT_ABSTRACT.md
-    (Badge and Provenance sections) before submitting it.
- 3. Add a Data Availability statement with the DOI to the camera-ready
-    version of the paper.
+Next step: upload all files from dist/ to a new Zenodo record at
+https://zenodo.org/uploads/new, fill in the metadata (title, authors,
+MIT license), and publish.
 EOF
